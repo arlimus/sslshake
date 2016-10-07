@@ -37,6 +37,10 @@ end
 fail unless File.directory?(testssl)
 ok 'openssl / testssl'
 
+info 'creating the "ssldummy" docker image'
+cmd("cd #{ssldummies} && docker build --tag ssldummy .")
+ok 'docker image ready to be used'
+
 info 'start ssl crash test dummies'
 cmd("cd #{ssldummies} && ./dummy stop && ./dummy start")
 ok 'ssl dummies are ready to be crashed'
@@ -66,12 +70,11 @@ PORTS.each do |port|
 
   res1 = {}
   res1time = Benchmark.measure {
-    cmd("rm *json; yes | ./#{testssl}/testssl.sh --json -p localhost:#{port}")
+    cmd("rm *json; yes | ./#{testssl}/testssl.sh --json -p 127.0.0.1:#{port}")
   }
   testssljson = Dir['*.json'][0]
   if testssljson.nil?
-    puts 'No openssl output JSON found!!'
-    require "pry"; binding.pry
+    fail 'No openssl output JSON found!!'
   end
   res1_raw = JSON.load(File.read(testssljson))
   res1 = {

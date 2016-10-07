@@ -13,6 +13,13 @@ require 'sslshake'
 SSLShake.hello('my.host', port: 4443, protocol: 'tls1.2')
 ```
 
+## Test (requires Docker)
+
+```bash
+bundle install
+bundle exec test/accuracy/test.rb
+```
+
 ## License
 
 MPLv2, see [https://www.mozilla.org/en-US/MPL/2.0/](https://www.mozilla.org/en-US/MPL/2.0/)
