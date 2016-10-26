@@ -53,7 +53,8 @@ module SSLShake
       end
 
       len = head & 0x7fff
-      res['raw'] = response = socket.read(len).unpack('H*')[0].upcase
+      res['raw'] = response = socket_read(socket, len, opts[:timeout], opts[:retries])
+                              .unpack('H*')[0].upcase
       raw = response.scan(/../)
 
       res['message_type'] = MESSAGE_TYPES.key(raw.shift)
