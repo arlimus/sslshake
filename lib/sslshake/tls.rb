@@ -90,7 +90,8 @@ module SSLShake
       res['version'] = VERSIONS.key(raw.shift(2).join(''))
       len = raw.shift(2).join.to_i(16)
 
-      res['raw'] = response = socket.read(len).unpack('H*')[0].upcase
+      res['raw'] = response = socket_read(socket, len, opts[:timeout], opts[:retries])
+                              .unpack('H*')[0].upcase
       raw = response.scan(/../)
 
       res['handshake_type'] = HANDSHAKE_TYPES.key(raw.shift)
