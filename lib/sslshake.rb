@@ -61,7 +61,16 @@ module SSLShake
       cur_socket.send(ssl.hello(opts[:ciphers]), 0)
     else
       ssl = SSLShake::TLS.new
-      cur_socket.send(ssl.hello(protocol, opts[:ciphers]), 0)
+
+      sni = nil
+      if opts[:servername] != nil && opts[:protocol] != 'ssl3'
+        sni = '0000' + sprintf('%04x', opts[:servername].length + 5) +
+            sprintf('%04x', opts[:servername].length + 3) + '00' +
+            sprintf('%04x', opts[:servername].length) +
+            opts[:servername].unpack('H*')[0]
+      end
+
+      cur_socket.send(ssl.hello(protocol, opts[:ciphers], sni), 0)
     end
 
     res = ssl.parse_hello(cur_socket, opts)
