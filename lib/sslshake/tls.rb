@@ -66,8 +66,8 @@ module SSLShake
       when 'ssl3'
         ciphers = cipher_string(SSL3_CIPHERS, cipher_search)
       when 'tls1.0', 'tls1.1'
-        ciphers = cipher_string(TLS10_CIPHERS, cipher_search)
         extensions ||= '000f000101' # add Heartbeat
+        ciphers = cipher_string(TLS_CIPHERS, cipher_search)
       when 'tls1.2'
         ciphers = cipher_string(TLS_CIPHERS, cipher_search)
         extensions ||= '000f000101' # add Heartbeat
