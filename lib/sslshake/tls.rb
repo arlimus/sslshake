@@ -66,11 +66,17 @@ module SSLShake
       when 'ssl3'
         ciphers = cipher_string(SSL3_CIPHERS, cipher_search)
       when 'tls1.0', 'tls1.1'
-        ciphers = cipher_string(TLS10_CIPHERS, cipher_search)
-        extensions ||= '000f000101' # add Heartbeat
+        ciphers = cipher_string(TLS_CIPHERS, cipher_search)
+        (extensions ||= '') << '000f000101' # add Heartbeat
+        extensions << '000d00140012040308040401050308050501080606010201' # add signature_algorithms
+        extensions << '000b00020100' # add ec_points_format
+        extensions << '000a000a0008fafa001d00170018' # add elliptic_curve
       when 'tls1.2'
         ciphers = cipher_string(TLS_CIPHERS, cipher_search)
-        extensions ||= '000f000101' # add Heartbeat
+        (extensions ||= '') << '000f000101' # add Heartbeat
+        extensions << '000d00140012040308040401050308050501080606010201' # add signature_algorithms
+        extensions << '000b00020100' # add ec_points_format
+        extensions << '000a000a0008fafa001d00170018' # add elliptic_curve
       else
         fail UserError, "This version is not supported: #{version.inspect}"
       end
