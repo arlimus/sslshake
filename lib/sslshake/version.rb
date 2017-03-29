@@ -3,5 +3,5 @@
 # license: MPLv2
 
 module SSLShake
-  VERSION = '1.0.13'.freeze
+  VERSION = '1.1.0'.freeze
 end
