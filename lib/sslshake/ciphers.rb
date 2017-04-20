@@ -166,7 +166,6 @@ module SSLShake # rubocop:disable Metrics/ModuleLength
     '00C4' => 'TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256',
     '00C5' => 'TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA256',
     '00FF' => 'TLS_EMPTY_RENEGOTIATION_INFO_SCSV',
-    '5600' => 'TLS_FALLBACK_SCSV',
     'C001' => 'TLS_ECDH_ECDSA_WITH_NULL_SHA',
     'C002' => 'TLS_ECDH_ECDSA_WITH_RC4_128_SHA',
     'C003' => 'TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA',
@@ -356,5 +355,6 @@ module SSLShake # rubocop:disable Metrics/ModuleLength
     'FEFF' => 'SSL_RSA_FIPS_WITH_3DES_EDE_CBC_SHA',
     'FFE0' => 'SSL_RSA_FIPS_WITH_3DES_EDE_CBC_SHA',
     'FFE1' => 'SSL_RSA_FIPS_WITH_DES_CBC_SHA',
+    '5600' => 'TLS_FALLBACK_SCSV'
   }.invert.freeze
 end
