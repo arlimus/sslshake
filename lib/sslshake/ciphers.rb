@@ -354,7 +354,6 @@ module SSLShake # rubocop:disable Metrics/ModuleLength
     'FEFE' => 'SSL_RSA_FIPS_WITH_DES_CBC_SHA',
     'FEFF' => 'SSL_RSA_FIPS_WITH_3DES_EDE_CBC_SHA',
     'FFE0' => 'SSL_RSA_FIPS_WITH_3DES_EDE_CBC_SHA',
-    'FFE1' => 'SSL_RSA_FIPS_WITH_DES_CBC_SHA',
-    '5600' => 'TLS_FALLBACK_SCSV'
+    'FFE1' => 'SSL_RSA_FIPS_WITH_DES_CBC_SHA'
   }.invert.freeze
 end
