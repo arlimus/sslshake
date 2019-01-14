@@ -39,7 +39,7 @@ module SSLShake
     }.freeze
 
     # https://tools.ietf.org/html/rfc6101#appendix-A.6
-    SSL3_CIPHERS = ::SSLShake::CIPHERS.select { |_, v| v < '001F' && v.length == 4 }
+    SSL3_CIPHERS = ::SSLShake::CIPHERS.select { |_, v| v.length == 4 }
     TLS_CIPHERS = ::SSLShake::CIPHERS.select { |k, _| k.start_with? 'TLS_' }
     TLS10_CIPHERS = TLS_CIPHERS.select { |_, v| v[0] == '0' && v[1] == '0' }
 
