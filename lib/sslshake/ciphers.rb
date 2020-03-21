@@ -166,6 +166,12 @@ module SSLShake # rubocop:disable Metrics/ModuleLength
     '00C4' => 'TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256',
     '00C5' => 'TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA256',
     '00FF' => 'TLS_EMPTY_RENEGOTIATION_INFO_SCSV',
+    # See https://tools.ietf.org/html/rfc8446#appendix-B.4
+    "1301" => "TLS_AES_128_GCM_SHA256",
+    "1302" => "TLS_AES_256_GCM_SHA384",
+    "1303" => "TLS_CHACHA20_POLY1305_SHA256",
+    "1304" => "TLS_AES_128_CCM_SHA256",
+    "1305" => "TLS_AES_128_CCM_8_SHA256",
     'C001' => 'TLS_ECDH_ECDSA_WITH_NULL_SHA',
     'C002' => 'TLS_ECDH_ECDSA_WITH_RC4_128_SHA',
     'C003' => 'TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA',

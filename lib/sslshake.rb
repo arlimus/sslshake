@@ -69,7 +69,6 @@ module SSLShake
             sprintf('%04x', opts[:servername].length) +
             opts[:servername].unpack('H*')[0]
       end
-
       cur_socket.send(ssl.hello(protocol, opts[:ciphers], sni), 0)
     end
 
