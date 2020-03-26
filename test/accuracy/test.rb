@@ -10,7 +10,7 @@ include Messages
 
 ssldummies = '.ssldummies'
 testssl = '.testssl'
-PORTS = [4443, 4444, 4445, 4446, 4447, 4448].freeze
+PORTS = [4443, 4444, 4445, 4446, 4447, 4448, 4449].freeze
 
 def cmd(sth)
   puts '  > '+sth unless ENV['DEBUG'].nil?
@@ -59,18 +59,21 @@ PORTS.each do |port|
     tls10 = SSLShake.hello('localhost', port: port, protocol: 'tls1.0')
     tls11 = SSLShake.hello('localhost', port: port, protocol: 'tls1.1')
     tls12 = SSLShake.hello('localhost', port: port, protocol: 'tls1.2')
+    tls13 = SSLShake.hello('localhost', port: port, protocol: 'tls1.3')
+
     res0 = {
-      ssl2: ssl2['success'] == true,
-      ssl3: ssl3['success'] == true,
+      ssl2:  ssl2['success'] == true,
+      ssl3:  ssl3['success'] == true,
       tls10: tls10['success'] == true,
       tls11: tls11['success'] == true,
       tls12: tls12['success'] == true,
+      tls13: tls13['success'] == true,
     }
   }
 
   res1 = {}
   res1time = Benchmark.measure {
-    cmd("rm *json; yes | ./#{testssl}/testssl.sh --json -p 127.0.0.1:#{port}")
+    cmd("rm *json; yes | ./#{testssl}/testssl.sh --warnings off --json -p 127.0.0.1:#{port}")
   }
   testssljson = Dir['*.json'][0]
   if testssljson.nil?
@@ -78,16 +81,17 @@ PORTS.each do |port|
   end
   res1_raw = JSON.load(File.read(testssljson))
   res1 = {
-    ssl2: res1_raw.find { |x| x['id'] == 'sslv2' }['finding'][/not offered/].nil?,
-    ssl3: res1_raw.find { |x| x['id'] == 'sslv3' }['finding'][/not offered/].nil?,
-    tls10: res1_raw.find { |x| x['id'] == 'tls1' }['finding'][/not offered/].nil?,
-    tls11: res1_raw.find { |x| x['id'] == 'tls1_1' }['finding'][/not offered/].nil?,
-    tls12: res1_raw.find { |x| x['id'] == 'tls1_2' }['finding'][/not offered/].nil?,
+    ssl2:  res1_raw.find { |x| x['id'] == 'SSLv2' }['finding'][/not offered/].nil?,
+    ssl3:  res1_raw.find { |x| x['id'] == 'SSLv3' }['finding'][/not offered/].nil?,
+    tls10: res1_raw.find { |x| x['id'] == 'TLS1' }['finding'][/not offered/].nil?,
+    tls11: res1_raw.find { |x| x['id'] == 'TLS1_1' }['finding'][/not offered/].nil?,
+    tls12: res1_raw.find { |x| x['id'] == 'TLS1_2' }['finding'][/not offered/].nil?,
+    tls13: res1_raw.find { |x| x['id'] == 'TLS1_3' }['finding'][/not offered/].nil?,
   }
 
   f = '%10s %10s %10s'
   puts format(f, '', 'sslrb', 'openssl')
-  %w{ssl2 ssl3 tls10 tls11 tls12}.each do |prot|
+  %w{ssl2 ssl3 tls10 tls11 tls12 tls13}.each do |prot|
     print_line(f, prot, res0, res1)
   end
   puts format('%10s %9.4fs %9.4fs', 'time', res0time.total, res1time.total)
