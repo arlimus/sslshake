@@ -1,6 +1,6 @@
 # sslshake
 
-Tiny Ruby library to simulate SSL and TLS handshakes. Independent of OpenSSL. Supports SSLv2, SSLv3, TLS 1.0 - 1.2.
+Tiny Ruby library to simulate SSL and TLS handshakes. Independent of OpenSSL. Supports SSLv2, SSLv3, TLS 1.0 - 1.3.
 
 ## Requirements
 
